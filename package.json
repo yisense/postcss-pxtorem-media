@@ -1,0 +1,40 @@
+{
+  "name": "@yisen/postcss-pxtorem-media",
+  "version": "0.0.1",
+  "description": "A CSS post-processor that converts px to rem.",
+  "main": "index.js",
+  "scripts": {
+    "lint": "eslint .",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "lint-staged"
+    }
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ANGULAR-X/postcss-pxtorem-media.git"
+  },
+  "author": "yisen",
+  "license": "MIT",
+  "keywords": [
+    "css",
+    "rem",
+    "pixel",
+    "px",
+    "postcss",
+    "postcss-plugin"
+  ],
+  "bugs": {
+    "url": "https://github.com/ANGULAR-X/postcss-pxtorem-media/issues"
+  },
+  "homepage": "https://github.com/ANGULAR-X/postcss-pxtorem-media#readme",
+  "devDependencies": {
+    "eslint": "^8.18.0",
+    "husky": "^8.0.1",
+    "lint-staged": "^13.0.3",
+    "postcss": "^8.4.14",
+    "prettier": "^2.7.1"
+  }
+}
