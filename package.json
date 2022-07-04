@@ -1,6 +1,6 @@
 {
   "name": "postcss-pxtorem-media",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "description": "A CSS post-processor that converts px to rem.",
   "publishConfig": {
     "registry": "https://registry.npmjs.org/",
