@@ -69,8 +69,8 @@ h1 {
 ### Example
 
 You can use special comments for ignore conversion of single lines:
-- `/* px-to-viewport-ignore-next */` — on a separate line, prevents conversion on the next line.
-- `/* px-to-viewport-ignoreAll */` — ignore all file
+- `/* px-to-rem-ignore-next */` — on a separate line, prevents conversion on the next line.
+- `/* px-to-rem-ignoreAll */` — ignore all file
 
 ```js
 var fs = require('fs');
@@ -171,7 +171,7 @@ Currently, the easiest way to have a single property ignored is to use a capital
 }
 
 .ignore {
-    /* px-to-viewport-ignore-next */
+    /* px-to-rem-ignore-next */
     border: 1px solid;
 }
 ```
