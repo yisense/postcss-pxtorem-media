@@ -1,11 +1,11 @@
-# postcss-pxtorem [![NPM version](https://badge.fury.io/js/postcss-pxtorem.svg)](http://badge.fury.io/js/postcss-pxtorem)
+# postcss-pxtorem-media
 
 A plugin for [PostCSS](https://github.com/ai/postcss) that generates rem units from pixel units.
 
 ## Install
 
 ```shell
-$ npm install postcss postcss-pxtorem --save-dev
+$ npm install postcss postcss-pxtorem-media --save-dev
 ```
 
 ## Usage
@@ -17,37 +17,76 @@ Pixels are the easiest unit to use (*opinion*). The only issue with them is that
 
 *With the default settings, only font related properties are targeted.*
 
+```js
+const options = {
+  rootValue: 192,
+  replace: true,
+  minPixelValue: 2,
+  propList: ['*'],
+  mediaQuery: false
+};
+```
+
 ```css
-// input
+// input default rootValue 192
 h1 {
-    margin: 0 0 20px;
-    font-size: 32px;
+  margin: 0 0 0.10417rem;
+  font-size: 0.16667rem;
+  line-height: 1.2;
+  letter-spacing: 1px;
+}
+@media screen and (max-width: 750px) {
+  // next comments: You can customize the rootValue: (750 / 10)
+  /* px-to-rem-define viewportWidth=750 */
+  h1 {
+    margin: 0 0 0.26667rem;
+    font-size: 0.42667rem;
     line-height: 1.2;
     letter-spacing: 1px;
+  }
 }
 
-// output
+// output rootValue: 192
 h1 {
-    margin: 0 0 20px;
-    font-size: 2rem;
-    line-height: 1.2;
-    letter-spacing: 0.0625rem;
+  margin: 0 0 0.10417rem;
+  font-size: 0.16667rem;
+  line-height: 1.2;
+  letter-spacing: 1px;
 }
+// output rootValue: 75
+@media screen and (max-width: 750px) {
+  /* px-to-rem-define viewportWidth=750 */
+  h1 {
+    margin: 0 0 0.26667rem;
+    font-size: 0.42667rem;
+    line-height: 1.2;
+    letter-spacing: 1px;
+  }
+}
+
 ```
 
 ### Example
+
+You can use special comments for ignore conversion of single lines:
+- `/* px-to-viewport-ignore-next */` — on a separate line, prevents conversion on the next line.
+- `/* px-to-viewport-ignoreAll */` — ignore all file
 
 ```js
 var fs = require('fs');
 var postcss = require('postcss');
 var pxtorem = require('postcss-pxtorem');
-var css = fs.readFileSync('main.css', 'utf8');
+var css = fs.readFileSync(process.cwd() +"/example/main.css", "utf8");
 var options = {
-    replace: false
+  rootValue: 192,
+  replace: true,
+  minPixelValue: 2,
+  propList: ['*'],
+  mediaQuery: false
 };
 var processedCss = postcss(pxtorem(options)).process(css).css;
 
-fs.writeFile('main-rem.css', processedCss, function (err) {
+fs.writeFile(process.cwd() +"/example/main-rem.css", processedCss, function (err) {
   if (err) {
     throw err;
   }
@@ -131,9 +170,8 @@ Currently, the easiest way to have a single property ignored is to use a capital
     font-size: 16px; // converted to 1rem
 }
 
-// `Px` or `PX` is ignored by `postcss-pxtorem` but still accepted by browsers
 .ignore {
-    border: 1Px solid; // ignored
-    border-width: 2PX; // ignored
+    /* px-to-viewport-ignore-next */
+    border: 1px solid;
 }
 ```

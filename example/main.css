@@ -1,4 +1,4 @@
-/* px-to-viewport-ignoreAll */
+/* px-to-rem-ignoreAll */
 h1 {
   margin: 0 0 20px;
   font-size: 32px;
@@ -6,7 +6,7 @@ h1 {
   letter-spacing: 1px;
 }
 @media screen and (max-width: 750px) {
-  /* px-to-viewport-define viewportWidth=750 */
+  /* px-to-rem-define viewportWidth=750 */
   h1 {
     margin: 0 0 20px;
     font-size: 32px;
