@@ -1,5 +1,5 @@
 {
-  "name": "@yisen/postcss-pxtorem-media",
+  "name": "@angular-x/postcss-pxtorem-media",
   "version": "0.0.1",
   "description": "A CSS post-processor that converts px to rem.",
   "main": "index.js",
@@ -36,5 +36,9 @@
     "lint-staged": "^13.0.3",
     "postcss": "^8.4.14",
     "prettier": "^2.7.1"
+  },
+  "directories": {
+    "example": "example",
+    "lib": "lib"
   }
 }
