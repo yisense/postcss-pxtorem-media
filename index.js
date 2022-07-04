@@ -2,10 +2,9 @@ const pxRegex = require("./lib/pixel-unit-regex");
 const filterPropList = require("./lib/filter-prop-list");
 const type = require("./lib/type");
 const {
-  // createPxReplace,
   getVariableFromComment,
   shouldSkipCurrentDesc
-} = require("./utils");
+} = require("./lib/utils");
 
 const defaults = {
   rootValue: 16,
@@ -128,10 +127,11 @@ module.exports = (options = {}) => {
   const exclude = opts.exclude;
   let isExcludeFile = false;
   let ignoreAll = false;
+  let rootValue;
   let variableMap = {};
   let pxReplace;
   return {
-    postcssPlugin: "@yisen/postcss-pxtorem-media",
+    postcssPlugin: "postcss-pxtorem",
     Once(css) {
       const filePath = css.source.input.file;
       ignoreAll = false;
@@ -146,7 +146,7 @@ module.exports = (options = {}) => {
         isExcludeFile = false;
       }
 
-      const rootValue =
+      rootValue =
         typeof opts.rootValue === "function"
           ? opts.rootValue(css.source.input)
           : opts.rootValue;
@@ -157,7 +157,7 @@ module.exports = (options = {}) => {
       );
     },
     Declaration(decl, { result }) {
-      if (isExcludeFile) return;
+      if (isExcludeFile || ignoreAll) return;
       if (shouldSkipCurrentDesc(decl, { result })) {
         return;
       }
@@ -167,9 +167,13 @@ module.exports = (options = {}) => {
         blacklistedSelector(opts.selectorBlackList, decl.parent.selector)
       )
         return;
-
+      rootValue = variableMap["viewportWidth"] ? variableMap.viewportWidth / 10 : rootValue;
+      pxReplace = createPxReplace(
+        rootValue,
+        opts.unitPrecision,
+        opts.minPixelValue
+      );
       const value = decl.value.replace(pxRegex, pxReplace);
-
       // if rem unit already exists, do not add or replace
       if (declarationExists(decl.parent, decl.prop, value)) return;
 
@@ -186,8 +190,7 @@ module.exports = (options = {}) => {
       variableMap = value;
     },
     AtRule(atRule) {
-      if (isExcludeFile) return;
-
+      if (isExcludeFile || ignoreAll) return;
       if (opts.mediaQuery && atRule.name === "media") {
         if (atRule.params.indexOf("px") === -1) return;
         atRule.params = atRule.params.replace(pxRegex, pxReplace);
