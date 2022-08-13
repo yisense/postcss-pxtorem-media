@@ -37,7 +37,7 @@ h1 {
 }
 @media screen and (max-width: 750px) {
   // next comments: You can customize the rootValue: (750 / 10)
-  /* px-to-rem-define viewportWidth=750 */
+  /*! px-to-rem-define viewportWidth=750 */
   h1 {
     margin: 0 0 0.26667rem;
     font-size: 0.42667rem;
@@ -55,7 +55,7 @@ h1 {
 }
 // output rootValue: 75
 @media screen and (max-width: 750px) {
-  /* px-to-rem-define viewportWidth=750 */
+  /*! px-to-rem-define viewportWidth=750 */
   h1 {
     margin: 0 0 0.26667rem;
     font-size: 0.42667rem;
@@ -69,8 +69,8 @@ h1 {
 ### Example
 
 You can use special comments for ignore conversion of single lines:
-- `/* px-to-rem-ignore-next */` — on a separate line, prevents conversion on the next line.
-- `/* px-to-rem-ignoreAll */` — ignore all file
+- `/*! px-to-rem-ignore-next */` — on a separate line, prevents conversion on the next line.
+- `/*! px-to-rem-ignoreAll */` — ignore all file
 
 ```js
 var fs = require('fs');
@@ -171,7 +171,7 @@ Currently, the easiest way to have a single property ignored is to use a capital
 }
 
 .ignore {
-    /* px-to-rem-ignore-next */
+    /*! px-to-rem-ignore-next */
     border: 1px solid;
 }
 ```
